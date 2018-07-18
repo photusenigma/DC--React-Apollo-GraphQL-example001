@@ -8,18 +8,24 @@ function MyComponent({data: {loading, peopleToFilms}}) {
   if (loading) return (<div> Loading... </div>);
   let people = Object.keys(peopleToFilms);
   return (
-    <dl>
-        {people.map(name => (
-          <div key={name}>
-            <dt>{name}</dt>
-            <dd>
-              {peopleToFilms[name].map(film => (
-                <div> {film} </div>
-              ))}
-            </dd>
-          </div>
-        ))}
-    </dl>
+    <div>
+        <h1>This is a fake div...with a head, but no body!</h1>
+        <dl>
+            {people.map(name => (
+            <div key={name}>
+                <dt><b>Character:</b> {name}</dt>
+                <dt><b>Hare Color:</b> {name.blinkhairColor}</dt>
+                <dt><b>iColor:</b> {name.eyeColor}</dt>
+                <dd>
+                <b>films:</b><br/>
+                {peopleToFilms[name].map(film => (
+                    <div> {film} </div>
+                ))}
+                </dd>
+            </div>
+            ))}
+        </dl>
+    </div>
   );
 }
 
@@ -31,6 +37,8 @@ const query = gql`
         mapValues: "filmConnection.films"
       ) {
         name
+        hairColor
+        eyeColor
         filmConnection {
           films @_(map: "title") {
             title

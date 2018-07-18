@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import ApolloClient from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
 
@@ -9,10 +11,14 @@ class App extends Component {
   constructor(...args) {
     super(...args);
 
-    const networkInterface = createNetworkInterface('https://swapi.apis.guru');
+    // const networkInterface = createNetworkInterface('https://swapi.apis.guru');
     this.client = new ApolloClient({
-      networkInterface,
-      dataIdFromObject: r => r.id,
+      link: new HttpLink({
+          uri: 'https://swapi.apis.guru'
+      }),
+      connectToDevTools: true,
+      cache: new InMemoryCache(),
+      dataIdFromObject: r => r.id
     });
   }
   render() {
